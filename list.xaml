@@ -1,0 +1,22 @@
+﻿<Window x:Class="MAG.list"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MAG"
+        mc:Ignorable="d"
+        Title="Каталог" Height="520" Width="815">
+    <Border Background="#020a2b">
+        <Border MinWidth="600" Margin="-3,48,2,48" Background="#022d3b" Padding="100"
+MaxWidth="550" CornerRadius="20" Height="372">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Color="LightPink" ShadowDepth="0"/>
+            </Border.Effect>
+            <Grid Height="543" VerticalAlignment="Top" Margin="-198,-144,-212,0">
+                <Button x:Name="Back" Content="Назад" Click="Button_click" Margin="720,0,10,509"/>
+                <TextBlock Text="Виберіть модель:" FontSize="16" Foreground="White" Margin="10,-6,663,516"/>
+                <StackPanel x:Name="CategoriesStackPanel" Margin="98,69,0,128" HorizontalAlignment="Left" Width="599"/>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

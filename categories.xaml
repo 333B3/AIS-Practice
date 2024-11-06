@@ -1,0 +1,26 @@
+﻿<Window x:Class="MAG.categories"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MAG"
+        mc:Ignorable="d"
+        Title="Категорії" Height="480" Width="815">
+    <Border Background="#020a2b">
+        <Border  MinWidth="600" Margin="-3,0,2,0" Background="#022d3b" VerticalAlignment="Center" Padding="100"
+MaxWidth="550" CornerRadius="20" Height="373">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Color="LightPink" ShadowDepth="0"/>
+            </Border.Effect>
+            <Grid Margin="-197,-155,-200,-122" >
+
+                <TextBlock Text="Виберіть потрібну категорію:" FontSize="16" Foreground="White" Margin="10,18,566,393"/>
+                <Button x:Name="Back" Content="Назад" Click="Back_Click" Margin="10,412,720,10"/>
+                <StackPanel x:Name="CategoriesStackPanel" Margin="139,78,0,28" HorizontalAlignment="Left" Width="547">
+                    
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Border>
+</Window>

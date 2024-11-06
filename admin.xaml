@@ -1,0 +1,28 @@
+﻿<Window x:Class="MAG.admin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MAG"
+        mc:Ignorable="d"
+        Title="admin" Height="450" Width="800">
+    <Grid Background="#020a2b">
+        <Border MinWidth="600" Margin="-59,0,-59,0" Background="#022d3b" VerticalAlignment="Center" Padding="100"
+        MaxWidth="550" CornerRadius="20" Height="375">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Color="LightPink" ShadowDepth="0"/>
+            </Border.Effect>
+            <StackPanel Margin="-40,-45,-35,-90">
+                <Button x:Name="Back" Content="Назад" Click="Back_Click" Height="25" Width="70"/>
+                <TextBlock Foreground="White" Height="28" Width="401" FontSize="16" Text="Введіть код:"/>
+                <PasswordBox x:Name="code" Height="35" Width="398" RenderTransformOrigin="0.506,0.592" />
+                <Button x:Name="login" Content="Увійти" FontSize="16" Background="#FF4BB035" FontWeight="Bold" Height="35" Width="400" BorderThickness="1,1,1,1" Margin="0,50,0,20" Click="Login_Click"/>
+                <Button x:Name="add" Click="add_Click" Content="Додати товар" FontSize="16" Background="#FFC6EB34" FontWeight="Bold" Height="35" Width="400" BorderThickness="1,1,1,1" IsEnabled="False" />
+                <Button x:Name="delete" Click="delete_Click" Content="Видалити товар"  FontSize="16" Background="#FFC6EB34" FontWeight="Bold" Height="35" Width="400" BorderThickness="1,1,1,1" IsEnabled="False"/>
+                <Button x:Name="order" Click="order_Click" Content="Замовлення"  FontSize="16" Background="#FFC6EB34" FontWeight="Bold" Height="35" Width="400" BorderThickness="1,1,1,1" IsEnabled="False"/>
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>
