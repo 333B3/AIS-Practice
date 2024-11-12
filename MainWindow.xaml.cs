@@ -10,6 +10,8 @@ namespace MAG
         {
             InitializeComponent();
             clearData();
+            this.Top = 200;
+            this.Left = 200;
         }
       
         private void clearData()
@@ -24,7 +26,7 @@ namespace MAG
                 {
                     connection.Open();
 
-                    string deleteSearch3 = "DELETE FROM search3";
+                    /* string deleteSearch3 = "DELETE FROM search3";
                     using (SQLiteCommand deleteCommandSearch3 = new SQLiteCommand(deleteSearch3, connection))
                     {
                         deleteCommandSearch3.ExecuteNonQuery();
@@ -33,7 +35,7 @@ namespace MAG
                     using (SQLiteCommand deleteCommandSearch3 = new SQLiteCommand(deleteSearch4, connection))
                     {
                         deleteCommandSearch3.ExecuteNonQuery();
-                    }
+                    }*/
                 }
 
                 catch (Exception ex)
@@ -44,14 +46,14 @@ namespace MAG
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            list list = new();
+            List list = new();
             list.Show();
             this.Hide();
         }
 
         private void Admin_login(object sender, RoutedEventArgs e)
         {
-            admin admin = new();
+            Admin admin = new();
             admin.Show();
             this.Hide();
         }

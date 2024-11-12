@@ -4,17 +4,19 @@ using System.Text;
 
 namespace MAG
 {
-    public partial class end : Window
+    public partial class End : Window
     {
-        public end()
+        public End()
         {
             InitializeComponent();
             DisplayType();
             DisplayProduct();
+            this.Top = 200;
+            this.Left = 200;
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            products products = new();
+            Products products = new();
             products.Show();
             this.Hide();
         }
@@ -81,12 +83,7 @@ namespace MAG
                         totalPrice = Convert.ToDecimal(priceReader["TotalPrice"]);
                     }
                 }
-                    string insertNum = "INSERT INTO num (price) VALUES (@type)";
-                    using (SQLiteCommand insertCommandNum = new SQLiteCommand(insertNum, connection))
-                    {
-                        insertCommandNum.Parameters.AddWithValue("@type", totalPrice);
-                        insertCommandNum.ExecuteNonQuery();
-                    }
+
             }
             poduct.Text = $"{productTypes}";
             price.Text = $"Всього: {totalPrice:C}";

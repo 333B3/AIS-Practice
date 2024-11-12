@@ -5,16 +5,18 @@ using System.Windows.Documents;
 
 namespace MAG
 {
-public partial class list : Window
+public partial class List : Window
     {
 
 
 
         private string selectedCategory;
-        public list()
+        public List()
         {
             InitializeComponent();
             CreateButtons();
+            this.Top = 200;
+            this.Left = 200;
         }
         private void Button_click(object sender, RoutedEventArgs e)
         {
@@ -83,7 +85,7 @@ public partial class list : Window
             Button clickedButton = sender as Button;
             string selectedCategory = clickedButton.Tag.ToString(); 
             UpdateSearchTable(selectedCategory); 
-            categories categories = new categories();
+            Categories categories = new Categories();
             categories.Show();
             this.Hide(); 
         }
@@ -106,12 +108,6 @@ public partial class list : Window
                     }
                     string insertQuery = "INSERT INTO search (type) VALUES (@type)";
                     using (SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, connection))
-                    {
-                        insertCommand.Parameters.AddWithValue("@type", newCategory);
-                        insertCommand.ExecuteNonQuery();
-                    }
-                    string insertNum = "INSERT INTO num (model) VALUES (@type)";
-                    using (SQLiteCommand insertCommand = new SQLiteCommand(insertNum, connection))
                     {
                         insertCommand.Parameters.AddWithValue("@type", newCategory);
                         insertCommand.ExecuteNonQuery();

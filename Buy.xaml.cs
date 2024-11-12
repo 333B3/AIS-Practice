@@ -8,6 +8,8 @@ namespace MAG
         public Buy()
         {
             InitializeComponent();
+            this.Top = 200;
+            this.Left = 200;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

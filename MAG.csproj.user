@@ -31,9 +31,6 @@
     <Compile Update="order.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="products.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="add.xaml">

@@ -5,12 +5,14 @@ using System.Windows.Controls;
 
 namespace MAG
 {
-    public partial class categories : Window
+    public partial class Categories : Window
     {
         private string selectedData; 
 
-        public categories()
+        public Categories()
         {
+            this.Top = 200;
+            this.Left = 200;
             InitializeComponent();
             selectedData = GetDataFromSearch(); 
             if (!string.IsNullOrEmpty(selectedData))
@@ -120,7 +122,7 @@ namespace MAG
             string selectedCategory = clickedButton.Tag.ToString();
 
             UpdateSearchTable(selectedCategory);
-            products products = new products();
+            Products products = new Products();
             products.Show();
             this.Hide();
         }
@@ -156,7 +158,7 @@ namespace MAG
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            list list = new list();
+            List list = new List();
             list.Show();
             this.Hide();
         }

@@ -4,12 +4,14 @@ using System.Windows.Controls;
 
 namespace MAG
 {
-    public partial class products : Window
+    public partial class Products : Window
     {
-        public products()
+        public Products()
         {
             InitializeComponent();
             CreateButtonsForCategories();
+            this.Top = 200;
+            this.Left = 200;
         }
 
         private void CreateButtonsForCategories()
@@ -100,7 +102,7 @@ namespace MAG
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    end endWindow = new end();
+                    End endWindow = new End();
                     endWindow.Show();
                     this.Hide();
                 }
@@ -134,12 +136,7 @@ namespace MAG
                         insertCommandSearch3.Parameters.AddWithValue("@type", selectedName);
                         insertCommandSearch3.ExecuteNonQuery();
                     }
-                    string insertNum = "INSERT INTO num (prod) VALUES (@type)";
-                    using (SQLiteCommand insertCommandNum = new SQLiteCommand(insertNum, connection))
-                    {
-                        insertCommandNum.Parameters.AddWithValue("@type", selectedName);
-                        insertCommandNum.ExecuteNonQuery();
-                    }
+                   
                 }
                 catch (Exception ex)
                 {
@@ -149,7 +146,7 @@ namespace MAG
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            categories categories = new();
+            Categories categories = new();
             categories.Show();
             this.Hide();
         }

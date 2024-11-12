@@ -3,11 +3,13 @@ using System.Windows;
 
 namespace MAG
 {
-    public partial class admin : Window
+    public partial class Admin : Window
     {
-        public admin()
+        public Admin()
         {
             InitializeComponent();
+            this.Top = 200;
+            this.Left = 200;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -56,21 +58,23 @@ namespace MAG
 
         private void delete_Click(object sender, RoutedEventArgs e)
         {
-            delete delete = new();
+            Delete delete = new();
             delete.Show();
             this.Hide();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            add addWindow = new();
+            Add addWindow = new();
             addWindow.Show();
             this.Close();
         }
 
         private void order_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"Цей розділ ще в розробці");
+            Order order = new();
+            order.Show();
+            this.Hide();
         }
     }
 }

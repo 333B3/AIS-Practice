@@ -3,11 +3,13 @@ using System.Windows;
 
 namespace MAG
 {
-    public partial class add : Window
+    public partial class Add : Window
     {
-        public add()
+        public Add()
         {
             InitializeComponent();
+            this.Top = 200;
+            this.Left = 200;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

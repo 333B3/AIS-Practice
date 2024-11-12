@@ -1,116 +1,154 @@
-﻿using System.Data.SQLite;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Data.SQLite;
+using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace MAG
 {
-    public partial class order : Window
+    public partial class Order : Window
     {
-        public order()
+        public Order()
         {
             InitializeComponent();
-            LoadData();
+            DisplayType();
+            DisplayProduct();
+            this.Top = 200;  
+            this.Left = 200; 
         }
-
-        private void LoadData()
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string dbPath = System.IO.Path.Combine(basePath, "..", "..", "data", "main.db");
-            string connectionString = $"Data Source={dbPath};Version=3;";
-            try
-            {
-                using (SQLiteConnection connection = new SQLiteConnection(dbPath))
-                {
-                    connection.Open();
-                    string query = "SELECT model, prod, number, price FROM num";
-
-                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                    using (SQLiteDataReader reader = command.ExecuteReader())
-                    {
-                        int rowCount = 0;
-
-                        while (reader.Read())
-                        {
-                            string model = reader["model"] as string ?? "";
-                            string prod = reader["prod"] as string ?? "";
-                            string number = reader["number"] as string ?? "";
-                            string price = reader["price"] as string ?? "";
-
-                            string buttonText = $"{model}, {prod}, {number}, {price} грн".Trim(new char[] { ',', ' ' });
-                            Button orderButton = new Button
-                            {
-                                Content = buttonText,
-                                Tag = number, 
-                                Margin = new Thickness(5),
-                                Width = 500,
-                                Height = 30,
-                                FontSize = 14
-                            };
-                            orderButton.Click += OrderButton_Click;
-                            ButtonContainer.Children.Add(orderButton);
-                            rowCount++;
-                        }
-
-                        if (rowCount == 0)
-                        {
-                            MessageBox.Show("Дані не знайдені:");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Помилка завантаження даних: " + ex.Message);
-            }
+            Admin admin = new();
+            admin.Show();
+            this.Hide();
         }
-        private void OrderButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                string numberToDelete = button.Tag.ToString();
-
-                // Удаляем строку из базы данных
-                DeleteOrder(numberToDelete);
-
-                // Удаляем кнопку из интерфейса
-                ButtonContainer.Children.Remove(button);
-
-                // Выводим сообщение
-                MessageBox.Show("Замовлення оброблено!");
-            }
-        }
-        private void DeleteOrder(string number)
+        // Підключення до БД та вивід
+        private void DisplayType()
         {
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string dbPath = System.IO.Path.Combine(basePath, "..", "..", "data", "main.db");
             string connectionString = $"Data Source={dbPath};Version=3;";
 
-            try
+            using (var connection = new SQLiteConnection(connectionString))
             {
-                using (SQLiteConnection connection = new SQLiteConnection(dbPath))
+                connection.Open();
+
+                string query = "SELECT type FROM search LIMIT 1";
+
+                using (var command = new SQLiteCommand(query, connection))
+                using (var reader = command.ExecuteReader())
                 {
-                    connection.Open();
-                    string deleteQuery = "DELETE FROM num WHERE number = @number";
-
-                    using (SQLiteCommand command = new SQLiteCommand(deleteQuery, connection))
+                    if (reader.Read())
                     {
-                        command.Parameters.AddWithValue("@number", number);
-                        int rowsAffected = command.ExecuteNonQuery();
-
-
-                        if (rowsAffected == 0)
-                        {
-                            MessageBox.Show("Не вдалося видалити з БД");
-                        }
+                        string modelType = reader["type"].ToString();
+                        model.Text = $"{modelType}";
+                    }
+                    else
+                    {
+                        model.Text = "";
                     }
                 }
+                string num = "SELECT number FROM num LIMIT 1";
+
+                using (var command = new SQLiteCommand(num, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string NUM = reader["number"].ToString();
+                        Number.Text = $"{NUM}";
+                    }
+                    else
+                    {
+                        Number.Text = "";
+                    }
+
+                }
             }
-            catch (Exception ex)
+        }
+            
+        // Вивід назви продукту та повної ціни
+        private void DisplayProduct()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string dbPath = System.IO.Path.Combine(basePath, "..", "..", "data", "main.db");
+            string connectionString = $"Data Source={dbPath};Version=3;";
+
+            StringBuilder productTypes = new StringBuilder();
+            decimal totalPrice = 0;
+
+            using (var connection = new SQLiteConnection(connectionString))
             {
-                MessageBox.Show("Помилка при видаленні: " + ex.Message);
+                connection.Open();
+
+                string productQuery = "SELECT type FROM search3";
+                using (var productCommand = new SQLiteCommand(productQuery, connection))
+                using (var productReader = productCommand.ExecuteReader())
+                {
+                    while (productReader.Read())
+                    {
+                        string productType = productReader["type"].ToString();
+                        if (productTypes.Length > 0)
+                            productTypes.Append(", ");
+                        productTypes.Append(productType);
+                    }
+                }
+                string priceQuery = "SELECT SUM(price) AS TotalPrice FROM search4";
+                using (var priceCommand = new SQLiteCommand(priceQuery, connection))
+                using (var priceReader = priceCommand.ExecuteReader())
+                {
+                    if (priceReader.Read() && priceReader["TotalPrice"] != DBNull.Value)
+                    {
+                        totalPrice = Convert.ToDecimal(priceReader["TotalPrice"]);
+                    }
+                }
+
             }
+            poduct.Text = $"{productTypes}";
+            price.Text = $"Всього: {totalPrice:C}";
+        }
+
+        private void buy_Click(object sender, RoutedEventArgs e)
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string dbPath = System.IO.Path.Combine(basePath, "..", "..", "data", "main.db");
+            string connectionString = $"Data Source={dbPath};Version=3;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string deleteSearch = "DELETE FROM search";
+                    using (SQLiteCommand deleteCommandSearch3 = new SQLiteCommand(deleteSearch, connection))
+                    {
+                        deleteCommandSearch3.ExecuteNonQuery();
+                    }
+                    string deletenum = "DELETE FROM num";
+                    using (SQLiteCommand deleteCommandSearch3 = new SQLiteCommand(deletenum, connection))
+                    {
+                        deleteCommandSearch3.ExecuteNonQuery();
+                    }
+                    string deleteSearch3 = "DELETE FROM search3";
+                    using (SQLiteCommand deleteCommandSearch3 = new SQLiteCommand(deleteSearch3, connection))
+                    {
+                        deleteCommandSearch3.ExecuteNonQuery();
+                    }
+                    string deleteSearch4 = "DELETE FROM search4";
+                    using (SQLiteCommand deleteCommandSearch3 = new SQLiteCommand(deleteSearch4, connection))
+                    {
+                        deleteCommandSearch3.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка оновлення: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            Order newOrderWindow = new Order();
+            newOrderWindow.Show();
+            this.Close();
         }
     }
 }

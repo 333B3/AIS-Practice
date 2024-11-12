@@ -4,13 +4,15 @@ using System.Windows.Controls;
 
 namespace MAG
 {
-    public partial class delete : Window
+    public partial class Delete : Window
     {
 
-        public delete()
+        public Delete()
         {
             InitializeComponent();
             LoadData();
+            this.Top = 200;
+            this.Left = 200;
         }
 
         private void LoadData()
@@ -84,7 +86,7 @@ namespace MAG
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            admin admin = new();
+            Admin admin = new();
             admin.Show();
             this.Hide();
         }
